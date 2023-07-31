@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title>Blog project</title>
+</head>
+<body>
+    <div class="container">
+       <h1 class="mb-4"><%= article.title %></h1>
+       <% console.log(role)%>
+    <% if(role =="admin"){%>
+       <a href="/articles/index" class="btn btn-secondary">index</a>       
+       <%} else{%>
+        <a href="/" class="btn btn-secondary">All articles</a>
+        <%}%>
+<script>
+           console.log(article.title);
+       </script>
+       <div class="text-muted mb-2">
+           <%= article.createdAt.toLocaleDateString() %>
+           <h6>Posted By <%=article.createdBy %> <b>Jason(Admin)</b></h6>
+       </div>
+       <div>
+        <br><%= article.description%><br>
+        <div class="text-muted mb-4">
+            <table>
+                <tr>
+            <form action="/articles/<%=article.id %>/likes" method="POST">
+            Likes <%= article.likes %> 
+            &nbsp;
+            <button style="background-color:lightblue" > Leave a Like</button>
+            &nbsp;
+            &nbsp;
+        </form>
+    </tr>
+        <form action="/articles/<%=article.id %>/dislikes" method="POST">
+            Dislikes <%= article.dislikes %>
+            &nbsp;
+            <button style="background-color:pink " > Leave a Dislike </button>
+        </form>
+    </table>
+        </div>
+    </div>
+       <div>
+           <br><%- article.sanitizedHtml %><br>
+       </div>
+       <h2>Comments</h2>
+       <div>
+          <a href="/articles/edit/<%= article.id %>/comments" class="btn btn-info">Add Comment</a>
+          <div>
+              <% for(var i=0; i< article.comments.length; i++) { %>
+                <tr> 
+                    <br><tr><h6 style="color:dimgrey    ">Posted by</h6>  <b> <%= article.comments[i].author %></b></tr>
+                   <br> <tr><%= article.comments[i].text  %> <br></tr>
+                 
+                </tr>
+            <% } %>
+          </div>
+       </div>
+    </div>    
+</body>
+</html>
